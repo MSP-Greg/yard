@@ -5,14 +5,14 @@ def init
   @breadcrumb_title = ''
   if @onefile
     sections :layout
-  elsif defined?(@file) && @file
+  elsif instance_variable_defined?(:@file) && @file
     if @file.attributes[:namespace]
       @object = options.object = Registry.at(@file.attributes[:namespace]) || Registry.root
     end
     @breadcrumb_title = "File: " + @file.title
     @page_title = @breadcrumb_title
     sections :layout, [:diskfile]
-  elsif @contents
+  elsif instance_variable_defined?(:@contents) && @contents
     sections :layout, [:contents]
   else
     case object
@@ -46,12 +46,12 @@ def index
 end
 
 def layout
-  @nav_url = url_for_list(!(defined?(@file) && @file) || options.index ? 'class' : 'file')
+  @nav_url = url_for_list(!(instance_variable_defined?(:@file) && @file) || options.index ? 'class' : 'file')
 
   @path =
     if !object || object.is_a?(String)
       nil
-    elsif defined?(@file) && @file
+    elsif instance_variable_defined?(:@file) && @file
       @file.path
     elsif !object.is_a?(YARD::CodeObjects::NamespaceObject)
       object.parent.path

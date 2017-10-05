@@ -111,6 +111,7 @@ module YARD
     # @return [void]
     def modify_nilclass
       NILCLASS_METHODS.each do |meth|
+        NilClass.send(:remove_method, meth) if nil.respond_to?(meth)
         NilClass.send(:define_method, meth) {|*args| }
       end
     end
