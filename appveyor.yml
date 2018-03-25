@@ -8,12 +8,13 @@ init:
       7z x C:\ruby_trunk.7z -oC:\ruby_trunk)
 
 install:
-  - bundle install
+  - C:\msys64\usr\bin\pacman -S --noconfirm mingw-w64-x86_64-ragel
+  - bundle install --without documentation --path C:/av_bundle
 
 build: off
 
 test_script:
-  - rake spec
+  - bundle exec rake spec
 
 on_finish:
   - ruby -v
@@ -23,9 +24,12 @@ deploy: off
 environment:
   matrix:
 #    - ruby_version: 22
-    - ruby_version: 22-x64
+#    - ruby_version: 22-x64
 #    - ruby_version: 23
-    - ruby_version: 23-x64
+#    - ruby_version: 23-x64
 #    - ruby_version: 24
-    - ruby_version: 24-x64
+#    - ruby_version: 24-x64
     - ruby_version: _trunk
+
+cache:
+  - C:\av_bundle
