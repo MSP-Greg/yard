@@ -20,6 +20,9 @@ jobs:
           base: update
       - name: Update RubyGems & Bundler
         run: gem update --system --no-document --conservative
+      - name: Windows - install RedCloth & redcarpet
+        if: startsWith(matrix.os, 'windows')
+        run: gem install RedCloth redcarpet --platform=ruby
       - name: Install Dependencies
         run: bundle install --jobs=3 --retry=3
       - name: Run Test
